@@ -26,7 +26,6 @@
 		<plugin>
   		<groupId>org.codehaus.mojo</groupId>
   		<artifactId>exec-maven-plugin</artifactId>
-  		<version>${maven-exec}</version>
   		<executions>
     		<execution>
       			<goals>
@@ -40,7 +39,6 @@
         </plugin>
         <plugin>
 	        <artifactId>maven-assembly-plugin</artifactId>
-	        <version>${assembly-version}</version>
 	        <configuration>
 	          <descriptorRefs>
 	            <descriptorRef>jar-with-dependencies</descriptorRef>
@@ -70,29 +68,24 @@
       <dependency>
       	<groupId>gr.aegean</groupId>
       	<artifactId>library-domain</artifactId>
-      	<version>0.1</version>
       </dependency>
 	  
 	  <!-- Jersey Dependencies -->
 	   <dependency>
        	<groupId>org.glassfish.jersey.core</groupId>
        	<artifactId>jersey-client</artifactId>
-       	<version>${jersey.version}</version>
       </dependency>
 	  <dependency>
     	<groupId>org.glassfish.jersey.inject</groupId>
     	<artifactId>jersey-hk2</artifactId>
-    	<version>${jersey.version}</version>
 	  </dependency>
 	  <dependency>
     	<groupId>org.glassfish.jersey.media</groupId>
     	<artifactId>jersey-media-moxy</artifactId>
-    	<version>${jersey.version}</version>
 	  </dependency>
 	  <dependency>
 	    <groupId>org.glassfish.jersey.media</groupId>
 	    <artifactId>jersey-media-jaxb</artifactId>
-	    <version>${jersey.version}</version>
 	  </dependency>
   </dependencies>
   
