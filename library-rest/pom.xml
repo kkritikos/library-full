@@ -11,17 +11,6 @@
 
   <artifactId>library-rest</artifactId>
   <packaging>war</packaging>
-  <properties>
-  		<!-- Maven and Java build options -->
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-		<!-- Dependencies versions -->
-		<jersey.version>2.34</jersey.version>
-		<cglib.version>2.2.2</cglib.version>
-		<jsr250.version>1.0</jsr250.version>
-		<inject.version>1</inject.version>
-		<mysql.version>8.0.24</mysql.version>
-  </properties>
   
   <build>
     <sourceDirectory>src/main/java</sourceDirectory>
