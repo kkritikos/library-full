@@ -13,7 +13,8 @@ import javax.ws.rs.InternalServerErrorException;
 import gr.aegean.book.configuration.PropertyReader;
 import gr.aegean.book.domain.Book;
 
-public class DBHandler {
+public final class DBHandler {
+	private DBHandler() {}
 	private static Connection getConnection() throws InternalServerErrorException {
 		try {
 			

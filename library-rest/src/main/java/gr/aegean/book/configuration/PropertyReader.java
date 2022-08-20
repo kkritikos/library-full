@@ -3,12 +3,14 @@ package gr.aegean.book.configuration;
 import java.io.InputStream;
 import java.util.Properties;
 
-public class PropertyReader {
+public final class PropertyReader {
     private static String dbName;
     private static String dbHost;
     private static String dbPort;
     private static String login;
     private static String pwd;
+
+    private PropertyReader() {}
 	
     static {
     	getProperties();
@@ -32,7 +34,7 @@ public class PropertyReader {
     	return null;
     }
     
-    private static String getDefaultValueIfNull(String s, String defaultVal) {
+    private static String getDefaultValueIfNull(final String s, final String defaultVal) {
     	if (s == null || s.trim().equals("")) return defaultVal;
     	else return s;
     }
