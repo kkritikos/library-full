@@ -47,11 +47,11 @@ public class HTMLHandler {
 		answer += "<th>Category</th><th>Summary</th><th>Language</th>";
 		answer += "<th>Pub. date</th>";
 		answer += "</tr>\n";
-		for (Book book: books) answer += createBookRow(book);
+		if (books != null) for (Book book: books) answer += createBookRow(book);
 		answer += "</table>\n";
 		answer += "</body>\n";
 		
-		answer += "\n</html>";
+		answer += "</html>";
 		
 		return answer;
 	}
@@ -64,18 +64,21 @@ public class HTMLHandler {
 		answer += "</head>\n";
 		
 		answer += "<body>\n";
-		answer += "<h1>BOOK " + book.getIsbn() + "</h1>\n";
+		if (book != null && book.getIsbn() != null && !book.getIsbn().trim().equals(""))
+			answer += "<h1>BOOK " + book.getIsbn() + "</h1>\n";
 		answer += "<table border=\"1\" width=\"60%\" align=\"center\">\n";
 		answer += "<caption>The requested book</caption>\n";
 		answer += "<tr><th>Isbn</th><th>Title</th><th>Authors</th><th>Publisher</th>";
 		answer += "<th>Category</th><th>Summary</th><th>Language</th>";
 		answer += "<th>Pub. date</th>";
 		answer += "</tr>\n";
-		answer += createBookRow(book);
+		if (book != null && book.getIsbn() != null && book.getPublisher() != null 
+				&& book.getTitle() != null && book.getAuthors() != null && !book.getAuthors().isEmpty()) 
+			answer += createBookRow(book);
 		answer += "</table>\n";
 		answer += "</body>\n";
 		
-		answer += "\n</html>";
+		answer += "</html>";
 		
 		return answer;
 	}

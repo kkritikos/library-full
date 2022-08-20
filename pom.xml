@@ -28,6 +28,8 @@
 	<jaxb-core.version>2.3.0.1</jaxb-core.version>
 	<javaassist.version>3.25.0-GA</javaassist.version>
 	<jaxws-api.version>2.3.1</jaxws-api.version>
+	<junit.version>5.8.1</junit.version>
+	<surefire.version>2.22.2</surefire.version>
   </properties>
   
   <modules>       
@@ -58,6 +60,10 @@
         	<artifactId>maven-assembly-plugin</artifactId>
 	        <version>${assembly-version}</version>
         </plugin>
+        <plugin>
+			<artifactId>maven-surefire-plugin</artifactId>
+			<version>${surefire.version}</version>
+		</plugin>
       </plugins>
     </pluginManagement>
   </build> 
@@ -159,7 +165,16 @@
 	    <artifactId>mysql-connector-java</artifactId>
 	    <version>${mysql.version}</version>
    	  </dependency>
+   	  
+   	  <!-- JUnit -->
+  	  <dependency>
+		<groupId>org.junit.jupiter</groupId>
+		<artifactId>junit-jupiter</artifactId>
+		<version>${junit.version}</version>
+		<scope>test</scope>
+	  </dependency>
   	</dependencies>
+  	
   </dependencyManagement>
   
   <pluginRepositories>
