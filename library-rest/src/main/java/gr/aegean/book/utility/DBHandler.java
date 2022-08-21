@@ -14,18 +14,42 @@ import gr.aegean.book.configuration.PropertyReader;
 import gr.aegean.book.domain.Book;
 
 public final class DBHandler {
+	static {createTable();}
+	
 	private DBHandler() {}
+	
 	private static Connection getConnection() throws InternalServerErrorException {
 		try {
-			
-			Class.forName("com.mysql.cj.jdbc.Driver");  
-			Connection con = DriverManager.getConnection(  
-			"jdbc:mysql://" + PropertyReader.getDbHost() + ":" + PropertyReader.getDbPort() + "/books",
-				PropertyReader.getLogin(),PropertyReader.getPwd());
+			Connection con = null;
+			if (PropertyReader.isSqlite()){
+				Class.forName("org.sqlite.JDBC");
+				con = DriverManager.getConnection("jdbc:sqlite:./my.db");
+			}
+			else {
+				Class.forName("com.mysql.cj.jdbc.Driver");  
+				con = DriverManager.getConnection(  
+			"jdbc:mysql://" + PropertyReader.getDbHost() + ":" + PropertyReader.getDbPort() + "/books",PropertyReader.getLogin(),PropertyReader.getPwd());
+			}
 			return con;
 		}
 		catch(Exception e) {
 			throw new InternalServerErrorException("Cannot connect to underlying database");
+		}
+	}
+	
+	private static void createTable() {
+		if (PropertyReader.isSqlite()){
+			try {
+				Class.forName("org.sqlite.JDBC");
+				Connection con = DriverManager.getConnection("jdbc:sqlite:./my.db");
+				Statement stmt = con.createStatement();
+				stmt.execute("create table book(isbn VARCHAR(15) PRIMARY KEY, authors VARCHAR(100) NOT NULL, title VARCHAR(50) NOT NULL, publisher VARCHAR(20) NOT NULL, date VARCHAR(20), category VARCHAR(20), summary VARCHAR(100), language VARCHAR(15));");
+				stmt.close();
+				con.close();
+			}
+			catch(Exception e) {
+				e.printStackTrace();
+			}
 		}
 	}
 	

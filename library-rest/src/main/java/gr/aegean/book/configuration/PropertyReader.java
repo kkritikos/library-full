@@ -9,6 +9,7 @@ public final class PropertyReader {
     private static String dbPort;
     private static String login;
     private static String pwd;
+    private static boolean sqlite;
 
     private PropertyReader() {}
 	
@@ -38,8 +39,15 @@ public final class PropertyReader {
     	if (s == null || s.trim().equals("")) return defaultVal;
     	else return s;
     }
+    
+    private static boolean getDefaultValueIfNull(String s, boolean defaultVal) {
+    	if (s == null || s.trim().equals("")) return defaultVal;
+    	else if (s.equals("sqlite")) return true;
+    	else return false;
+    }
 
 	private static void getProperties(){
+		sqlite = getDefaultValueIfNull(System.getProperty("db.type"),false);
 		Properties props = loadPropertyFile();
 		if (props != null){
 			dbName = getDefaultValueIfNull(props.getProperty("dbName"),"");
@@ -77,5 +85,9 @@ public final class PropertyReader {
 	
 	public static String getPwd() {
 		return pwd;
+	}
+	
+	public static boolean isSqlite() {
+		return sqlite;
 	}
 }

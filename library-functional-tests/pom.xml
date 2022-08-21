@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>gr.aegean</groupId>
+    <artifactId>library</artifactId>
+    <version>0.1</version>
+  </parent>
+  <artifactId>library-functional-tests</artifactId>
+  <name>Book REST API Functional Tests</name>
+
+  <properties>
+    <servlet.port>8080</servlet.port>
+  </properties>
+
+  <dependencies>
+    <!-- JUnit dependencies -->
+    <dependency>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter-engine</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter-params</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.junit.platform</groupId>
+      <artifactId>junit-platform-suite-api</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.junit.platform</groupId>
+      <artifactId>junit-platform-runner</artifactId>
+      <scope>test</scope>
+    </dependency>
+    
+    <!-- rest-assured dependencies -->
+    <dependency>
+      <groupId>io.rest-assured</groupId>
+      <artifactId>rest-assured</artifactId>
+      <scope>test</scope>
+	</dependency>
+	
+	<!-- GSON dependency -->
+	<dependency>
+	    <groupId>com.google.code.gson</groupId>
+	    <artifactId>gson</artifactId>
+	</dependency>
+	
+	<dependency>
+      <groupId>${project.groupId}</groupId>
+      <artifactId>library-domain</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>${project.groupId}</groupId>
+      <artifactId>library-rest</artifactId>
+      <type>war</type>
+    </dependency>
+  </dependencies>
+
+  <build>
+    <pluginManagement>
+      <plugins>
+        <plugin>
+          <groupId>org.codehaus.cargo</groupId>
+          <artifactId>cargo-maven3-plugin</artifactId>
+          <configuration>
+            <configuration>
+              <properties>
+                <cargo.servlet.port>${servlet.port}</cargo.servlet.port>
+              </properties>
+            </configuration>
+            <deployables>
+              <deployable>
+                <groupId>${project.groupId}</groupId>
+                <artifactId>library-rest</artifactId>
+                <type>war</type>
+                <properties>
+            		<context>library</context>
+        		</properties>
+              </deployable>
+            </deployables>
+          </configuration>
+        </plugin>
+      </plugins>
+    </pluginManagement>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-failsafe-plugin</artifactId>
+        <version>2.22.2</version>
+        <executions>
+          <execution>
+            <id>perform-it</id>
+            <goals>
+              <goal>integration-test</goal>
+            </goals>
+            <configuration>
+              <systemProperties>
+                <property>
+                  <name>servlet.port</name>
+                  <value>${servlet.port}</value>
+                </property>
+                </systemProperties>
+            </configuration>
+          </execution>
+          <execution>
+            <id>verify-it</id>
+            <goals>
+              <goal>verify</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.codehaus.cargo</groupId>
+        <artifactId>cargo-maven3-plugin</artifactId>
+        <configuration>
+        	<container>
+            	<containerId>tomcat8x</containerId>
+                <zipUrlInstaller>
+                	<url>https://repo.maven.apache.org/maven2/org/apache/tomcat/tomcat/8.5.64/tomcat-8.5.64.zip</url>
+                </zipUrlInstaller>
+                <systemProperties>
+    				<db.type>sqlite</db.type>
+  				</systemProperties>
+            </container>
+            <configuration>
+                <files>
+				   <copy>
+				      <file>${basedir}/src/main/resources/tomcat-users.xml</file>
+				      <tofile>conf/tomcat-users.xml</tofile>
+				      <configfile>true</configfile>
+				      <overwrite>true</overwrite>
+				   </copy>
+      			</files>
+            </configuration>
+        </configuration>
+        <executions>
+          <execution>
+            <id>start-cargo</id>
+            <phase>pre-integration-test</phase>
+            <goals>
+              <goal>start</goal>
+            </goals>
+          </execution>
+          <execution>
+            <id>stop-cargo</id>
+            <phase>post-integration-test</phase>
+            <goals>
+              <goal>stop</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
+</project>
