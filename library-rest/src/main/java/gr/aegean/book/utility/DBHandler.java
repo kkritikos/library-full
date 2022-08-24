@@ -43,7 +43,9 @@ public final class DBHandler {
 				Class.forName("org.sqlite.JDBC");
 				Connection con = DriverManager.getConnection("jdbc:sqlite:./my.db");
 				Statement stmt = con.createStatement();
-				stmt.execute("create table book(isbn VARCHAR(15) PRIMARY KEY, authors VARCHAR(100) NOT NULL, title VARCHAR(50) NOT NULL, publisher VARCHAR(20) NOT NULL, date VARCHAR(20), category VARCHAR(20), summary VARCHAR(100), language VARCHAR(15));");
+				stmt.execute("create table book(isbn VARCHAR(15) PRIMARY KEY, authors VARCHAR(100) NOT NULL, "
+						+ "title VARCHAR(50) NOT NULL, publisher VARCHAR(20) NOT NULL, date VARCHAR(20), category VARCHAR(20), "
+						+ "summary VARCHAR(100), language VARCHAR(15));");
 				stmt.close();
 				con.close();
 			}

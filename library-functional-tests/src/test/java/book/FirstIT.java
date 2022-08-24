@@ -25,7 +25,7 @@ public class FirstIT implements TestLifecycleLogger
     @Order(1)
     public void callIndexPage() throws Exception
     {
-        expect().statusCode(200).when().get();
+        when().get().then().assertThat().statusCode(200);
     }
     
     @Test

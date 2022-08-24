@@ -40,7 +40,8 @@ import java.util.List;
         @Test
 	    @Order(4)
 	    public void getExistingBooks() throws Exception{
-        	List<Book> books = given().accept("application/json").get("/api/books/").then().assertThat().statusCode(200).extract().as(new TypeRef<List<Book>>(){});
+        	List<Book> books = given().accept("application/json").get("/api/books/").then().assertThat().
+        			statusCode(200).extract().as(new TypeRef<List<Book>>(){});
 	    	assertThat(books, hasSize(3));
 	    	assertThat(books.get(0).getIsbn(),anyOf(equalTo("1111"),equalTo("2222"),equalTo("3333")));
 	    	assertThat(books.get(1).getIsbn(),anyOf(equalTo("1111"),equalTo("2222"),equalTo("3333")));

@@ -1,11 +1,8 @@
 package book;
 
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.DynamicTest;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestFactory;
 import org.junit.jupiter.api.TestMethodOrder;
-import org.junit.jupiter.api.function.ThrowingConsumer;
 import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -20,11 +17,8 @@ import static org.hamcrest.Matchers.*;
 import static org.hamcrest.MatcherAssert.*;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
-import java.util.function.Function;
-import java.util.stream.Stream;
 
     @DisplayName("Adding Book Testing")
     @TestMethodOrder(OrderAnnotation.class)
@@ -65,7 +59,8 @@ import java.util.stream.Stream;
 	    @Test
 	    @Order(3)
 	    public void getExistingBook() throws Exception{
-	    	given().accept("application/json").get("/api/books/xxx").then().assertThat().statusCode(200).and().body("isbn", equalTo("xxx"));
+	    	given().accept("application/json").get("/api/books/xxx").then().
+	    	assertThat().statusCode(200).and().body("isbn", equalTo("xxx"));
 	    }
 	    
 	    @ParameterizedTest
@@ -79,7 +74,8 @@ import java.util.stream.Stream;
 	    @Test
 	    @Order(5)
 	    public void getExistingBooks() throws Exception{
-	    	List<Book> books = given().accept("application/json").get("/api/books/").then().assertThat().statusCode(200).extract().as(new TypeRef<List<Book>>(){});
+	    	List<Book> books = given().accept("application/json").get("/api/books/").then().assertThat().statusCode(200).
+	    			extract().as(new TypeRef<List<Book>>(){});
 	    	assertThat(books, hasSize(4));
 	    	assertThat(books.get(0).getIsbn(),anyOf(equalTo("xxx"),equalTo("1111"),equalTo("2222"),equalTo("3333")));
 	    	assertThat(books.get(1).getIsbn(),anyOf(equalTo("xxx"),equalTo("1111"),equalTo("2222"),equalTo("3333")));
@@ -87,41 +83,11 @@ import java.util.stream.Stream;
 	    	assertThat(books.get(3).getIsbn(),anyOf(equalTo("xxx"),equalTo("1111"),equalTo("2222"),equalTo("3333")));
 	    }
 	    
-	    @TestFactory
+	    @ParameterizedTest
 	    @Order(6)
-	    Stream<DynamicTest> generateRandomNumberOfTestsFromIterator() {
-
-	        // Generates random positive integers between 0 and 100 until
-	        // a number evenly divisible by 7 is encountered.
-	        Iterator<Integer> inputGenerator = new Iterator<Integer>() {
-
-	            Random random = new Random();
-	            int current = 0;
-	            int times = 0;
-
-	            @Override
-	            public boolean hasNext() {
-	                current = 11 + random.nextInt(10);
-	                times++;
-	                System.out.println("Times is: " + times);
-	                if (times >= 11) return false;
-	                else return true;
-	            }
-
-	            @Override
-	            public Integer next() {
-	                return current;
-	            }
-	        };
-
-	        // Generates display names like: input:5, input:37, input:85, etc.
-	        Function<Integer, String> displayNameGenerator = (input) -> "input:" + input;
-
-	        // Executes tests based on the current input value.
-	        ThrowingConsumer<Integer> testExecutor = (input) -> 
-	        given().accept("application/json").param("publisher","Publisher" + input).get("/rest/books").then().assertThat().statusCode(404);
-
-	        // Returns a stream of dynamic tests.
-	        return DynamicTest.stream(inputGenerator, displayNameGenerator, testExecutor);
+	    @ValueSource(strings = {"11", "12", "15", "19"})
+	    public void useWrongPublisher(String publisherId) {
+	    	given().accept("application/json").param("publisher","Publisher" + publisherId).get("/api/books").then().
+	    	assertThat().statusCode(200).body(equalTo("[]"));
 	    }
     }
