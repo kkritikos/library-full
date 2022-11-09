@@ -62,7 +62,7 @@ services:
                 volumes:
                         - mysql:/var/lib/mysql
                 networks:
-                        - book-net
+                        - library-net
 networks:
         library-net: {}
 volumes:
