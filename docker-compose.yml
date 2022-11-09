@@ -27,9 +27,10 @@ services:
     					max_attempts: 3
     					window: 40s
                 networks:
-                        - book-net
+                        - library-net
                 depends_on: 
-                        - mysql
+                        mysql: 
+                        	condition: service_healthy
                 configs:
 			      - source: tomcat_config
 			        target: /usr/local/tomcat/conf
@@ -39,6 +40,12 @@ services:
                 build:
                         context: .
                         dockerfile: Dockerfile_mysql
+                ports:
+            		- "3306"
+                healthcheck:
+           		 	test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost"]
+            		timeout: 20s
+            		retries: 10
                 deploy:
   					restart_policy:
     					condition: on-failure
@@ -57,7 +64,7 @@ services:
                 networks:
                         - book-net
 networks:
-        book-net: {}
+        library-net: {}
 volumes:
         mysql: {}
 configs:
