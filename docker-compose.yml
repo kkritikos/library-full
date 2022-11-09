@@ -1,0 +1,66 @@
+services:
+        tomcat:
+                image: "service:latest"
+                build:
+                        context: .
+                        dockerfile: Dockerfile
+                ports:
+                        - "8080:8080"
+                healthcheck:
+	  				test: ["CMD", "curl", "-f", "http://localhost:8080"]
+	  				interval: 1m30s
+	  				timeout: 10s
+	  				retries: 3
+	  				start_period: 40s
+	  			deploy:
+	  				replicas: 2
+	  				resources:
+				        limits:
+				          cpus: '2.0'
+				          memory: 1024M
+				        reservations:
+				          cpus: '0.50'
+				          memory: 512M
+  					restart_policy:
+    					condition: on-failure
+   						delay: 10s
+    					max_attempts: 3
+    					window: 40s
+                networks:
+                        - book-net
+                depends_on: 
+                        - mysql
+                configs:
+			      - source: tomcat_config
+			        target: /usr/local/tomcat/conf
+                
+        mysql:
+                image: "db:latest"
+                build:
+                        context: .
+                        dockerfile: Dockerfile_mysql
+                deploy:
+  					restart_policy:
+    					condition: on-failure
+   						delay: 10s
+    					max_attempts: 3
+    					window: 40s
+    				resources:
+				        limits:
+				          cpus: '4.0'
+				          memory: 4096M
+				        reservations:
+				          cpus: '2.0'
+				          memory: 2048M
+                volumes:
+                        - mysql:/var/lib/mysql
+                networks:
+                        - book-net
+networks:
+        book-net: {}
+volumes:
+        mysql: {}
+configs:
+  tomcat_config:
+    file: ./tomcat-users.xml
+        
