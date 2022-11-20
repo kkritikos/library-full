@@ -36,10 +36,7 @@ services:
 			        target: /usr/local/tomcat/conf
                 
         mysql:
-                image: "db:latest"
-                build:
-                        context: .
-                        dockerfile: Dockerfile_mysql
+                image: "mysql:latest"
                 ports:
             		- "3306"
                 healthcheck:
@@ -57,10 +54,14 @@ services:
 				          cpus: '4.0'
 				          memory: 4096M
 				        reservations:
-				          cpus: '2.0'
+				          cpus: '1.5'
 				          memory: 2048M
+				environment:
+				   MYSQL_RANDOM_ROOT_PASSWORD: yes
                 volumes:
                         - mysql:/var/lib/mysql
+                        - "$pwd"/mysql:/docker-entrypoint-initdb.d
+                
                 networks:
                         - library-net
 networks:
@@ -70,4 +71,3 @@ volumes:
 configs:
   tomcat_config:
     file: ./tomcat-users.xml
-        
