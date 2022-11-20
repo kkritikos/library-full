@@ -7,7 +7,7 @@ services:
                 ports:
                         - "8080:8080"
                 healthcheck:
-	  				test: ["CMD", "curl", "-f", "http://localhost:8080/library"]
+				  test: ["CMD", "curl", "-f", "http://localhost:8080/library"]
 	  				interval: 1m30s
 	  				timeout: 10s
 	  				retries: 3
