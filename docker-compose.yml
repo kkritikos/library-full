@@ -21,11 +21,11 @@ services:
         reservations:
           cpus: '0.50'
           memory: 512M
-        restart_policy:
-          condition: on-failure
-          delay: 10s
-          max_attempts: 3
-          window: 40s
+      restart_policy:
+        condition: on-failure
+        delay: 10s
+        max_attempts: 3
+        window: 40s
     networks:
       - library-net
     depends_on: 
@@ -53,9 +53,9 @@ services:
         limits:
           cpus: '4.0'
           memory: 4096M
-      reservations:
-        cpus: '1.5'
-        memory: 2048M
+        reservations:
+          cpus: '1.5'
+          memory: 2048M
     environment:
       MYSQL_RANDOM_ROOT_PASSWORD: yes
     volumes:
