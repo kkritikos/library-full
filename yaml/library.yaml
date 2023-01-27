@@ -1,0 +1,39 @@
+metadata:
+  name: library #Deployment name
+  labels:
+    app: library #label to find the respective pods to manage
+spec:
+  replicas: 2 #create 2 replicas
+  selector:
+    matchLabels:
+      app: library
+  template: #template for the replica/pod specification
+    metadata:
+      labels:
+        app: library #label for the corresponding app
+    spec: 
+      containers:
+      - name: book #container name
+        image: library:latest #container image
+        ports:
+        - containerPort: 30000 #container port
+        volumeMounts:
+            - name: tomcat-config-vol
+              mountPath: "/usr/local/tomcat/conf/"
+              readOnly: true
+        resources:
+            requests:
+                memory: "512Mi"
+                cpu: "2000m"
+            limits:
+                memory: "1024Mi"
+                cpu: "500m"
+      volumes:
+        - name: tomcat-config-vol
+          configMap:
+          # Provide the name of the ConfigMap you want to mount.
+            name: tomcat-config
+            # An array of keys from the ConfigMap to create as files items:
+            items:
+                - key: "tomcat-users.xml"
+                  path: "tomcat-users.xml"
