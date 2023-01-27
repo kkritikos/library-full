@@ -46,5 +46,5 @@ spec:
           persistentVolumeClaim:
             claimName: mysql-claim 
         - name: init
-          hostPath:
-            path: /data/init
+          secret:
+            secretName: sql-secret
