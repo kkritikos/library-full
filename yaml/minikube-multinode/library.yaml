@@ -14,6 +14,8 @@ spec:
       labels:
         app: library #label for the corresponding app
     spec: 
+      nodeSelector: #selecting only nodes with this component type, i.e., that will host library containers
+        componentType: APP
       containers:
       - name: library #container name
         image: kkritikos/library:latest #container image
