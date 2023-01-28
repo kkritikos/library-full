@@ -14,7 +14,7 @@ spec:
     spec: 
       containers:
       - name: library #container name
-        image: library:latest #container image
+        image: kkritikos/library:latest #container image
         ports:
         - containerPort: 30000 #container port
         env: #get environment vars from specific secret
