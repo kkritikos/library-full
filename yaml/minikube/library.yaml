@@ -39,10 +39,10 @@ spec:
         resources:
             requests:
                 memory: "512Mi"
-                cpu: "1000m"
+                cpu: "500m"
             limits:
                 memory: "1024Mi"
-                cpu: "500m"
+                cpu: "2000m"
       volumes:
         - name: tomcat-config-vol
           secret:
