@@ -61,6 +61,12 @@ public final class PropertyReader {
 			if (altDbHost != null && !altDbHost.equals("")) dbHost = altDbHost; 
 		}
 		catch(Exception e) {}
+		
+		String loginVar = System.getProperty("DB_USER");
+		if (loginVar != null) login = loginVar;
+		
+		String pwdVar = System.getProperty("DB_PWD");
+		if (pwdVar != null) pwd = pwdVar;
 	}
 	
 	public static String getDbName() {
