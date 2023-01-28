@@ -5,7 +5,7 @@ metadata:
   labels:
     app: library #label to find the respective pods to manage
 spec:
-  replicas: 2 #create 2 replicas
+  replicas: 1
   selector:
     matchLabels:
       app: library
@@ -39,7 +39,7 @@ spec:
         resources:
             requests:
                 memory: "512Mi"
-                cpu: "300m"
+                cpu: "500m"
             limits:
                 memory: "1024Mi"
                 cpu: "2000m"
