@@ -1,7 +1,14 @@
 package gr.aegean.book.domain;
 
 import java.util.List;
+import java.util.UUID;
 
+import javax.persistence.Column;
+import javax.persistence.ElementCollection;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -9,11 +16,15 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 
 @XmlRootElement
+@Entity
 public class Book {
 
+	@Id
 	private String isbn = null;
     private String title = null;
     private String category = null;
+    @Column()
+    @ElementCollection(targetClass=String.class, fetch = FetchType.EAGER)
     private List<String> authors = null;
     private String publisher = null;
     private String language = null;
@@ -21,16 +32,58 @@ public class Book {
     private String date = null;
     
     public Book() {}
-
-    public Book(String isbn, String title, String category, List<String> authors, String summary, String language, String publisher, String date) {
-        this.isbn = isbn;
-        this.title = title;
-        this.category = category;
-        this.authors = authors;
-        this.summary = summary;
-        this.language = language;
-        this.publisher = publisher;
-        this.date = date;
+    
+    private Book(Builder builder) {
+    	this.isbn = builder.isbn;
+    	this.title = builder.title;
+    	this.authors = builder.authors;
+    	this.publisher = builder.publisher;
+    	this.category = builder.category;
+    	this.language = builder.language;
+    	this.summary = builder.summary;
+    	this.date = builder.date;
+    }
+    
+    public static class Builder{
+    	private String isbn = null;
+        private String title = null;
+        private String category = null;
+        private List<String> authors = null;
+        private String publisher = null;
+        private String language = null;
+        private String summary = null;
+        private String date = null;
+        
+        public Builder(String isbn, String title, List<String> authors, String publisher) {
+        	this.isbn = isbn;
+        	this.title = title;
+        	this.authors = authors;
+        	this.publisher = publisher;
+        }
+        
+        public Builder category(String value) {
+        	this.category = value;
+        	return this;
+        }
+        
+        public Builder language(String value) {
+        	this.language = value;
+        	return this;
+        }
+        
+        public Builder summary(String value) {
+        	this.summary = value;
+        	return this;
+        }
+        
+        public Builder date(String value) {
+        	this.date = value;
+        	return this;
+        }
+        
+        public Book build() {
+        	return new Book(this);
+        }
     }
     
     public String toString(){

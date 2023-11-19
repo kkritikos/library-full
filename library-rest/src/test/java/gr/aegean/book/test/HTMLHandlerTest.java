@@ -32,7 +32,8 @@ public class HTMLHandlerTest implements TestInterface{
 		String language = accessor.getString(start + 7);
 		String date = accessor.getString(start + 8);
 		
-		return new Book(isbn,title,category,authors,summary,language,publisher,date);
+		return new Book.Builder(isbn, title, authors, publisher).
+				category(category).summary(summary).language(language).date(date).build();
 	}
 	
 	@ParameterizedTest

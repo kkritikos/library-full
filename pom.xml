@@ -30,6 +30,10 @@
 	<jaxws-api.version>2.3.1</jaxws-api.version>
 	<junit.version>5.8.1</junit.version>
 	<surefire.version>2.22.2</surefire.version>
+	<hibernate-version>5.6.15.Final</hibernate-version>
+    <h2-version>2.0.202</h2-version>
+    <hibernate-jpa>1.0.2.Final</hibernate-jpa>
+    <hibernate-annot>3.5.6-Final</hibernate-annot>
   </properties>
   
   <modules>       
@@ -165,6 +169,21 @@
 	    <artifactId>mysql-connector-java</artifactId>
 	    <version>${mysql.version}</version>
    	  </dependency>
+   	  <dependency>
+       <groupId>org.hibernate</groupId>
+       <artifactId>hibernate-core</artifactId>
+       <version>${hibernate-version}</version>
+      </dependency>
+      <dependency>
+       <groupId>com.h2database</groupId>
+       <artifactId>h2</artifactId>
+       <version>${h2-version}</version>
+      </dependency>
+      <dependency>
+    	<groupId>org.hibernate.javax.persistence</groupId>
+    	<artifactId>hibernate-jpa-2.1-api</artifactId>
+    	<version>${hibernate-jpa}</version>
+	  </dependency>
    	  
    	  <!-- JUnit -->
   	  <dependency>
