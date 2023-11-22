@@ -25,13 +25,13 @@ public class BookClient {
     public BookClient() {
     	this.ip = PropertyReader.getIp();
     	this.port = Integer.parseInt(PropertyReader.getPort());
-    	basePath = "http://" + ip + ":" + port + "/library-rest/api/books"; 
+    	basePath = "http://" + ip + ":" + port + "/books"; 
     }
     
     public BookClient(String ip, int port) {
     	this.ip = ip;
     	this.port = port;
-    	basePath = "http://" + ip + ":" + port + "/library-rest/api/books"; 
+    	basePath = "http://" + ip + ":" + port + "/books"; 
     }
     
     private WebTarget getTarget(String methodName) {

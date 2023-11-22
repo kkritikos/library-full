@@ -9,6 +9,8 @@ import gr.aegean.book.domain.Book;
 import gr.aegean.book.utility.DBHandler;
 import gr.aegean.book.utility.HTMLHandler;
 
+import javax.annotation.security.PermitAll;
+import javax.annotation.security.RolesAllowed;
 import javax.ws.rs.BadRequestException;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
@@ -28,7 +30,7 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
 @Path("/books")
-
+@PermitAll
 public class BookService {
 	private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger("BookService");
 	
@@ -97,6 +99,7 @@ public class BookService {
 	}
 	
 	@POST
+	@RolesAllowed("admin")
 	@Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML, MediaType.TEXT_XML})
 	public Response addBook(@Context UriInfo uriInfo, Book book) throws BadRequestException, InternalServerErrorException, URISyntaxException {
 		logger.info("With book: " + book);
@@ -129,6 +132,7 @@ public class BookService {
 	}
 	
 	@PUT
+	@RolesAllowed("admin")
 	@Path ("{isbn}")
 	@Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML, MediaType.TEXT_XML})
 	public Response putBook(@PathParam("isbn") String isbn, Book book) throws NotFoundException, BadRequestException, InternalServerErrorException {
@@ -164,6 +168,7 @@ public class BookService {
 	}
 	
 	@DELETE
+	@RolesAllowed("admin")
 	@Path ("{isbn}")
 	public Response deleteBook(@PathParam("isbn") String isbn) throws NotFoundException, InternalServerErrorException {
 		logger.info("With isbn: " + isbn);

@@ -20,6 +20,7 @@ public class HibernateBootstrap {
 		        Metadata metadata = 
 		                new MetadataSources(registry)             
 		                        .addAnnotatedClass(gr.aegean.book.domain.Book.class)
+		                        .addAnnotatedClass(gr.aegean.book.domain.User.class)
 		                        .getMetadataBuilder()
 		                        .applyImplicitNamingStrategy(ImplicitNamingStrategyJpaCompliantImpl.INSTANCE)
 		                        .build(); 

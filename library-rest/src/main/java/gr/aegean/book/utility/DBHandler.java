@@ -1,15 +1,35 @@
 package gr.aegean.book.utility;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 
 import gr.aegean.book.domain.Book;
+import gr.aegean.book.domain.User;
 
 public final class DBHandler {
+	
+	public static void addAdminUser() {
+		Session session = HibernateBootstrap.getSessionFactory().getCurrentSession();
+		session.beginTransaction();
+		User user = new User();
+		user.setUsername("admin");
+		user.setPassword("admin");
+		user.getRoles().add("admin");
+		session.persist(user);
+		session.getTransaction().commit();
+	}
+	
+	public static User getUser(String username) {
+		Session session = HibernateBootstrap.getSessionFactory().getCurrentSession();
+		session.beginTransaction();
+		User user = session.byNaturalId(User.class).using("username", username).load();
+		session.getTransaction().commit();
+		
+		return user;
+	}
+	
 	public static List<Book> getBooks(String title, List<String> authors, String publisher){
 		Session session = HibernateBootstrap.getSessionFactory().getCurrentSession();
 		String filter = null;
