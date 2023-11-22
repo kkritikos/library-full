@@ -10,6 +10,7 @@ import org.eclipse.jetty.server.ServerConnector;
 import org.glassfish.jersey.jetty.JettyHttpContainerFactory;
 import org.glassfish.jersey.server.ResourceConfig;
 //import org.glassfish.jersey.server.filter.RolesAllowedDynamicFeature;
+import org.glassfish.jersey.server.filter.RolesAllowedDynamicFeature;
 
 import gr.aegean.book.utility.DBHandler;
 
@@ -18,7 +19,7 @@ public class BookApp extends ResourceConfig{
 	
 	public BookApp() {
 		packages("gr.aegean.book.service");
-		//register(RolesAllowedDynamicFeature.class);
+		register(RolesAllowedDynamicFeature.class);
 		register(gr.aegean.book.security.AuthenticationFilter.class);
 		
 		DBHandler.addAdminUser();
