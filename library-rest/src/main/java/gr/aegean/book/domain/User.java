@@ -10,10 +10,12 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
 import org.hibernate.annotations.NaturalId;
 
 @Entity
+@Table(name="users")
 public class User {
 	@Id
 	@GeneratedValue

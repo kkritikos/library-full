@@ -57,17 +57,17 @@ public class HTMLHandler {
 	}
 	
 	public static String createHtmlBook(Book book) {
-		String answer = "<html>\n";
+		String answer = "<html>";
 		
-		answer += "<head>\n";
-		answer += "<title>A Book from Aegean Library</title>\n";
-		answer += "</head>\n";
+		answer += "<head>";
+		answer += "<title>A Book from Aegean Library</title>";
+		answer += "</head>";
 		
-		answer += "<body>\n";
+		answer += "<body>";
 		if (book != null && book.getIsbn() != null && !book.getIsbn().trim().equals(""))
-			answer += "<h1>BOOK " + book.getIsbn() + "</h1>\n";
-		answer += "<table border=\"1\" width=\"60%\" align=\"center\">\n";
-		answer += "<caption>The requested book</caption>\n";
+			answer += "<h1>BOOK " + book.getIsbn() + "</h1>";
+		answer += "<table border=\"1\" width=\"60%\" align=\"center\">";
+		answer += "<caption>The requested book</caption>";
 		answer += "<tr><th>Isbn</th><th>Title</th><th>Authors</th><th>Publisher</th>";
 		answer += "<th>Category</th><th>Summary</th><th>Language</th>";
 		answer += "<th>Pub. date</th>";
@@ -75,8 +75,8 @@ public class HTMLHandler {
 		if (book != null && book.getIsbn() != null && book.getPublisher() != null 
 				&& book.getTitle() != null && book.getAuthors() != null && !book.getAuthors().isEmpty()) 
 			answer += createBookRow(book);
-		answer += "</table>\n";
-		answer += "</body>\n";
+		answer += "</table>";
+		answer += "</body>";
 		
 		answer += "</html>";
 		
