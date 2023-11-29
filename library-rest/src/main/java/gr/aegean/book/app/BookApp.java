@@ -13,6 +13,7 @@ import org.glassfish.jersey.server.ResourceConfig;
 import org.glassfish.jersey.server.filter.RolesAllowedDynamicFeature;
 
 import gr.aegean.book.utility.DBHandler;
+import gr.aegean.book.utility.HibernateBootstrap;
 
 public class BookApp extends ResourceConfig{
 	private Server server;

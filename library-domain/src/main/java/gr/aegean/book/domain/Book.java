@@ -2,6 +2,7 @@ package gr.aegean.book.domain;
 
 import java.util.List;
 
+import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
@@ -19,11 +20,13 @@ public class Book {
 
 	@Id
 	private String isbn = null;
+	@Basic(optional = false)
     private String title = null;
     private String category = null;
-    @Column()
+    @Column(nullable = false)
     @ElementCollection(targetClass=String.class, fetch = FetchType.EAGER)
     private List<String> authors = null;
+    @Basic(optional = false)
     private String publisher = null;
     private String language = null;
     private String summary = null;
@@ -36,10 +39,10 @@ public class Book {
     	this.title = builder.title;
     	this.authors = builder.authors;
     	this.publisher = builder.publisher;
-    	this.category = builder.category;
-    	this.language = builder.language;
-    	this.summary = builder.summary;
-    	this.date = builder.date;
+    	setCategory(builder.category);
+    	setLanguage(builder.language);
+    	setSummary(builder.summary);
+    	setDate(builder.date);
     }
     
     public static class Builder{
@@ -52,7 +55,20 @@ public class Book {
         private String summary = null;
         private String date = null;
         
-        public Builder(String isbn, String title, List<String> authors, String publisher) {
+        private static void checkSingleValue(String value, String message) throws IllegalArgumentException{
+        	if (value == null || value.trim().equals("")) throw new IllegalArgumentException(message + " cannot be null or empty");
+        }
+        
+        private static void checkListString(List<String> list, String message) throws IllegalArgumentException{
+        	if (list == null || list.isEmpty()) throw new IllegalArgumentException(message + " cannot be null or empty");
+        }
+        
+        public Builder(String isbn, String title, List<String> authors, String publisher) throws IllegalArgumentException{
+        	checkSingleValue(isbn, "ISBN");
+        	checkSingleValue(title, "Title");
+        	checkSingleValue(publisher, "Publisher");
+        	checkListString(authors, "The list of authors");
+        	
         	this.isbn = isbn;
         	this.title = title;
         	this.authors = authors;
@@ -92,7 +108,8 @@ public class Book {
 		return isbn;
 	}
 
-	public void setIsbn(String isbn) {
+	public void setIsbn(String isbn) throws IllegalArgumentException{
+		Builder.checkSingleValue(isbn, "ISBN");
 		this.isbn = isbn;
 	}
 
@@ -100,7 +117,8 @@ public class Book {
 		return title;
 	}
 
-	public void setTitle(String title) {
+	public void setTitle(String title) throws IllegalArgumentException{
+		Builder.checkSingleValue(title, "Title");
 		this.title = title;
 	}
 
@@ -109,14 +127,16 @@ public class Book {
 	}
 
 	public void setCategory(String category) {
-		this.category = category;
+		if (category == null || category.trim().equals("")) this.category = null;
+		else this.category = category.trim();
 	}
 
 	public List<String> getAuthors() {
 		return authors;
 	}
 
-	public void setAuthors(List<String> authors) {
+	public void setAuthors(List<String> authors) throws IllegalArgumentException{
+		Builder.checkListString(authors, "The list of authors");
 		this.authors = authors;
 	}
 
@@ -124,7 +144,8 @@ public class Book {
 		return publisher;
 	}
 
-	public void setPublisher(String publisher) {
+	public void setPublisher(String publisher) throws IllegalArgumentException{
+		Builder.checkSingleValue(publisher, "Publisher");
 		this.publisher = publisher;
 	}
 
@@ -133,7 +154,8 @@ public class Book {
 	}
 
 	public void setLanguage(String language) {
-		this.language = language;
+		if (language == null || language.trim().equals("")) this.language = null;
+		else this.language = language.trim();
 	}
 
 	public String getSummary() {
@@ -141,7 +163,8 @@ public class Book {
 	}
 
 	public void setSummary(String summary) {
-		this.summary = summary;
+		if (summary == null || summary.trim().equals("")) this.summary = null;
+		else this.summary = summary.trim();
 	}
 
 	public String getDate() {
@@ -149,6 +172,16 @@ public class Book {
 	}
 
 	public void setDate(String date) {
-		this.date = date;
+		if (date == null || date.trim().equals("")) this.date = null;
+		else this.date = date.trim();
+	}
+	
+	public boolean equals(Object o) {
+		if (o instanceof Book) {
+			Book b = (Book)o;
+			if (b.getIsbn().equals(isbn)) return true;
+		}
+		
+		return false;
 	}
 }

@@ -27,29 +27,29 @@ public class HTMLHandler {
 		str += "<td>" + getStringFieldValue(book.getSummary()) + "</td>";
 		str += "<td>" + getStringFieldValue(book.getLanguage()) + "</td>";
 		str += "<td>" + getStringFieldValue(book.getDate()) + "</td>";
-		str += "</tr>\n";
+		str += "</tr>";
 		
 		return str;
 	}
 	
 	public static String createHtmlBooks(List<Book> books) {
-		String answer = "<html>\n";
+		String answer = "<html>";
 		
-		answer += "<head>\n";
-		answer += "<title>The Books from Aegean Library</title>\n";
-		answer += "</head>\n";
+		answer += "<head>";
+		answer += "<title>The Books from Aegean Library</title>";
+		answer += "</head>";
 		
-		answer += "<body>\n";
-		answer += "<h1>BOOKS</h1>\n";
-		answer += "<table border=\"1\" width=\"60%\" align=\"center\">\n";
-		answer += "<caption>The requested books</caption>\n";
+		answer += "<body>";
+		answer += "<h1>BOOKS</h1>";
+		answer += "<table border=\"1\" width=\"60%\" align=\"center\">";
+		answer += "<caption>The requested books</caption>";
 		answer += "<tr><th>Isbn</th><th>Title</th><th>Authors</th><th>Publisher</th>";
 		answer += "<th>Category</th><th>Summary</th><th>Language</th>";
 		answer += "<th>Pub. date</th>";
-		answer += "</tr>\n";
+		answer += "</tr>";
 		if (books != null) for (Book book: books) answer += createBookRow(book);
-		answer += "</table>\n";
-		answer += "</body>\n";
+		answer += "</table>";
+		answer += "</body>";
 		
 		answer += "</html>";
 		
@@ -71,7 +71,7 @@ public class HTMLHandler {
 		answer += "<tr><th>Isbn</th><th>Title</th><th>Authors</th><th>Publisher</th>";
 		answer += "<th>Category</th><th>Summary</th><th>Language</th>";
 		answer += "<th>Pub. date</th>";
-		answer += "</tr>\n";
+		answer += "</tr>";
 		if (book != null && book.getIsbn() != null && book.getPublisher() != null 
 				&& book.getTitle() != null && book.getAuthors() != null && !book.getAuthors().isEmpty()) 
 			answer += createBookRow(book);

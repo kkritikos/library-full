@@ -31,7 +31,8 @@ public class User {
 	}
 
 	public String getUsername() { return username; }
-	public void setUsername(String username) {
+	public void setUsername(String username) throws IllegalArgumentException{
+		if (username == null || username.trim().equals("")) throw new IllegalArgumentException("Username cannot be null or empty");
 		this.username = username;
 	}
 	public UUID getId() {return id;}
@@ -41,7 +42,8 @@ public class User {
 		return password;
 	}
 
-	public void setPassword(String password) {
+	public void setPassword(String password) throws IllegalArgumentException{
+		if (password == null || password.trim().equals("")) throw new IllegalArgumentException("Password cannot be null or empty");
 		this.password = password;
 	}
 	

@@ -2,6 +2,7 @@ package gr.aegean.book.test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -17,6 +18,7 @@ import org.junit.jupiter.params.provider.ValueSource;
 import gr.aegean.book.domain.User;
 
 public class UserTest implements TestInterface{
+	//Checking whether all fields apart from the roles one are null when empty constructor is used
 	@Test
 	void checkConstructor() {
 		User u = new User();
@@ -25,15 +27,16 @@ public class UserTest implements TestInterface{
 		assertEquals(u.getRoles(),new ArrayList<String>());
 	}
 	
+	//Checking negative cases for setting the user password
 	@ParameterizedTest
 	@NullAndEmptySource
-	void checkSetGetNullEmptPassword(String pwd) {
+	void checkSetGetNullEmptyPassword(String pwd) {
 		User user = new User();
-		user.setPassword(pwd);
-		
-		assertEquals(user.getPassword(),pwd);
+		Exception e = assertThrows(IllegalArgumentException.class, () -> user.setPassword(pwd));
+		assertEquals(e.getMessage(),"Password cannot be null or empty");
 	}
 	
+	//Checking positive cases for setting the user password
 	@ParameterizedTest
 	@ValueSource(strings={"Pwd1","P","dsfds!!!"})
 	void checkSetGetNormalPassword(String pwd) {
@@ -43,15 +46,16 @@ public class UserTest implements TestInterface{
 		assertEquals(user.getPassword(),pwd);
 	}
 	
+	//Checking negative cases for setting the username
 	@ParameterizedTest
 	@NullAndEmptySource
 	void checkSetGetNullEmptUserName(String username) {
 		User user = new User();
-		user.setUsername(username);
-		
-		assertEquals(user.getUsername(),username);
+		Exception e = assertThrows(IllegalArgumentException.class, () -> user.setUsername(username));
+		assertEquals(e.getMessage(),"Username cannot be null or empty");
 	}
 	
+	//Checking positive cases for setting the username
 	@ParameterizedTest
 	@ValueSource(strings={"U","U1","User!!!"})
 	void checkSetGetNormalUsername(String pwd) {
@@ -61,6 +65,7 @@ public class UserTest implements TestInterface{
 		assertEquals(user.getUsername(),pwd);
 	}
 	
+	//Checking setter & getter combined func. for roles field
 	@ParameterizedTest
 	@MethodSource("listProvider")
 	void checkList(List<String> roles) {
