@@ -1,7 +1,5 @@
 package gr.aegean.book.utility;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import org.hibernate.Session;
